@@ -1,12 +1,22 @@
-const http = require('http');
-const PORT = 3000;
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
+// Enable CORS for your frontend domain
+app.use(cors({
+  origin: 'https://forms.odel.sa/' // Replace with your actual frontend domain
+}));
+
+// JSON Parser for incoming requests
+app.use(express.json());
+
+const PORT = process.env.PORT || 3000; // Use the environment PORT or 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
